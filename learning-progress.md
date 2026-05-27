@@ -24,8 +24,8 @@
 | Day 1 | 概念建立、環境安裝 | ✅ | 2026-05-20 | |
 | Day 2 | SELECT / WHERE / ORDER BY / LIMIT | ✅ | 2026-05-20 | |
 | Day 3 | 資料型別與 NULL | ✅ | 2026-05-21 | |
-| Day 4 | INSERT / UPDATE / DELETE | 🔄 | 2026-05-21 | |
-| Day 5 | CREATE TABLE / PRIMARY KEY | 🔲 | | |
+| Day 4 | INSERT / UPDATE / DELETE | ✅ | 2026-05-21 | |
+| Day 5 | CREATE TABLE / PRIMARY KEY | 🔄 | 2026-05-21 | |
 | Day 6-7 | 實作：待辦事項 App 資料庫 | 🔲 | | |
 
 ## Week 2：關聯與 JOIN
