@@ -11,8 +11,8 @@
 
 | 週次 | 主題 | 狀態 |
 |------|------|------|
-| Week 1 | 基礎建立（概念、CRUD、建表） | 🔄 進行中 |
-| Week 2 | 關聯與 JOIN | 🔲 未開始 |
+| Week 1 | 基礎建立（概念、CRUD、建表） | ✅ 已完成 |
+| Week 2 | 關聯與 JOIN | 🔄 進行中 |
 | Week 3 | 設計與效能 | 🔲 未開始 |
 
 ---
@@ -25,15 +25,15 @@
 | Day 2 | SELECT / WHERE / ORDER BY / LIMIT | ✅ | 2026-05-20 | |
 | Day 3 | 資料型別與 NULL | ✅ | 2026-05-21 | |
 | Day 4 | INSERT / UPDATE / DELETE | ✅ | 2026-05-21 | |
-| Day 5 | CREATE TABLE / PRIMARY KEY | 🔄 | 2026-05-21 | |
-| Day 6-7 | 實作：待辦事項 App 資料庫 | 🔲 | | |
+| Day 5 | CREATE TABLE / PRIMARY KEY | ✅ | 2026-05-21 | |
+| Day 6-7 | 實作：待辦事項 App 資料庫 | ✅ | 2026-05-21 | |
 
 ## Week 2：關聯與 JOIN
 
 | Day | 主題 | 狀態 | 完成日期 | 筆記 |
 |-----|------|------|----------|------|
-| Day 8 | PRIMARY KEY / FOREIGN KEY / 關聯概念 | 🔲 | | |
-| Day 9 | INNER JOIN | 🔲 | | |
+| Day 8 | PRIMARY KEY / FOREIGN KEY / 關聯概念 | ✅ | 2026-05-21 | |
+| Day 9 | INNER JOIN | 🔄 | 2026-05-21 | |
 | Day 10 | LEFT JOIN / RIGHT JOIN | 🔲 | | |
 | Day 11 | 聚合函數 / GROUP BY / HAVING | 🔲 | | |
 | Day 12 | 子查詢 / IN / EXISTS | 🔲 | | |
