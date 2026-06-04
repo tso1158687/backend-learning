@@ -33,9 +33,9 @@
 | Day | 主題 | 狀態 | 完成日期 | 筆記 |
 |-----|------|------|----------|------|
 | Day 8 | PRIMARY KEY / FOREIGN KEY / 關聯概念 | ✅ | 2026-05-21 | |
-| Day 9 | INNER JOIN | 🔄 | 2026-05-21 | |
-| Day 10 | LEFT JOIN / RIGHT JOIN | 🔲 | | |
-| Day 11 | 聚合函數 / GROUP BY / HAVING | 🔲 | | |
+| Day 9 | INNER JOIN | ✅ | 2026-05-21 | |
+| Day 10 | LEFT JOIN / RIGHT JOIN | ✅ | 2026-05-21 | |
+| Day 11 | 聚合函數 / GROUP BY / HAVING | 🔄 | 2026-05-21 | |
 | Day 12 | 子查詢 / IN / EXISTS | 🔲 | | |
 | Day 13-14 | 實作：部落格資料庫 | 🔲 | | |
 
