@@ -252,6 +252,121 @@ SELECT '123'::INT;
 
 ---
 
+## JOIN
+
+### INNER JOIN
+只回傳兩邊都有對應資料的結果。
+```sql
+SELECT t.title, u.name
+FROM tasks t
+INNER JOIN users u ON t.user_id = u.id;
+```
+
+### LEFT JOIN
+左邊的表全部保留，右邊沒有對應的補 NULL。
+```sql
+SELECT u.name, t.title
+FROM users u
+LEFT JOIN tasks t ON u.id = t.user_id;
+```
+
+找出「沒有任何 task」的 user：
+```sql
+SELECT u.name
+FROM users u
+LEFT JOIN tasks t ON u.id = t.user_id
+WHERE t.id IS NULL;
+```
+
+> `RIGHT JOIN` 實務上很少用，把表格順序對調就等於 LEFT JOIN。
+
+---
+
+## 聚合函數
+
+| 函數 | 說明 |
+|------|------|
+| `COUNT(*)` | 計算所有筆數（含 NULL）|
+| `COUNT(欄位)` | 計算非 NULL 的筆數 |
+| `SUM(欄位)` | 加總 |
+| `AVG(欄位)` | 平均 |
+| `MAX(欄位)` | 最大值 |
+| `MIN(欄位)` | 最小值 |
+
+### GROUP BY
+```sql
+-- 每個 user 各有幾筆 task
+SELECT u.name, COUNT(t.id) AS task_count
+FROM users u
+INNER JOIN tasks t ON t.user_id = u.id
+GROUP BY u.id, u.name;
+```
+
+> 規則：SELECT 裡出現的欄位，要嘛在 GROUP BY 裡，要嘛是聚合函數。
+
+### HAVING
+對分組結果篩選（WHERE 是篩選原始資料，HAVING 是篩選分組後的結果）：
+```sql
+SELECT u.name, COUNT(t.id) AS task_count
+FROM users u
+INNER JOIN tasks t ON t.user_id = u.id
+GROUP BY u.id, u.name
+HAVING COUNT(t.id) > 1;
+```
+
+### FILTER（PostgreSQL 專有）
+```sql
+SELECT
+  COUNT(*) FILTER (WHERE is_done = true)  AS 已完成,
+  COUNT(*) FILTER (WHERE is_done = false) AS 未完成
+FROM tasks;
+```
+
+---
+
+## 子查詢（Subquery）
+
+### IN / NOT IN
+```sql
+SELECT * FROM users
+WHERE id IN (
+  SELECT user_id FROM tasks WHERE is_done = false
+);
+```
+
+### EXISTS / NOT EXISTS
+只要找到第一筆就停止，效能比 IN 好：
+```sql
+SELECT * FROM users u
+WHERE NOT EXISTS (
+  SELECT 1 FROM tasks t WHERE t.user_id = u.id
+);
+```
+
+### Scalar Subquery（放在 SELECT 裡當欄位）
+```sql
+SELECT *,
+  (SELECT COUNT(*) FROM tasks t WHERE t.user_id = u.id) AS task_count
+FROM users u;
+```
+
+---
+
+## 多對多關係（M:N）
+
+需要一張**中介表（Junction Table）**：
+
+```sql
+-- 一篇文章可以有多個標籤，一個標籤可以屬於多篇文章
+CREATE TABLE post_tags (
+  post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+  tag_id  UUID NOT NULL REFERENCES tags(id)  ON DELETE CASCADE,
+  PRIMARY KEY (post_id, tag_id)  -- 複合主鍵，防止重複
+);
+```
+
+---
+
 ## Foreign Key 關聯
 
 讓兩張表之間有真實的關係，資料庫層級強制保證一致性。
