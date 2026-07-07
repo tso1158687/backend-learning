@@ -13,7 +13,7 @@
 |------|------|------|
 | Week 1 | 基礎建立（概念、CRUD、建表） | ✅ 已完成 |
 | Week 2 | 關聯與 JOIN | ✅ 已完成 |
-| Week 3 | 設計與效能 | 🔄 進行中 |
+| Week 3 | 設計與效能 | ✅ 已完成 |
 
 ---
 
@@ -43,12 +43,12 @@
 
 | Day | 主題 | 狀態 | 完成日期 | 筆記 |
 |-----|------|------|----------|------|
-| Day 15 | 正規化（1NF / 2NF / 3NF） | 🔲 | | |
-| Day 16 | Index 索引 | 🔲 | | |
-| Day 17 | Transaction / ACID | 🔲 | | |
-| Day 18 | DISTINCT / CASE WHEN / Window Function | 🔲 | | |
-| Day 19 | ORM / SQL Injection / Connection Pool | 🔲 | | |
-| Day 20-21 | 實作：電商系統資料庫 | 🔲 | | |
+| Day 15 | 正規化（1NF / 2NF / 3NF） | ✅ | 2026-05-21 | |
+| Day 16 | Index 索引 | ✅ | 2026-05-21 | |
+| Day 17 | Transaction / ACID | ✅ | 2026-06-08 | |
+| Day 18 | DISTINCT / CASE WHEN / Window Function | ✅ | 2026-06-08 | |
+| Day 19 | ORM / SQL Injection / Connection Pool | ✅ | 2026-06-12 | |
+| Day 20-21 | 實作：電商系統資料庫 | ✅ | 2026-06-12 | |
 
 ---
 
