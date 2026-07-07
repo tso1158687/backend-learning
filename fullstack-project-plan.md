@@ -23,7 +23,7 @@ users, products, inventories, orders, order_items
 
 | 階段 | 主題 | 狀態 |
 |------|------|------|
-| 階段 1 | NestJS + Prisma 基礎建置 | 🔄 進行中 |
+| 階段 1 | NestJS + Prisma 基礎建置（環境已備妥，觀念待練習）| 🔄 進行中 |
 | 階段 2 | 商品與庫存 API（CRUD） | 🔲 未開始 |
 | 階段 3 | 訂單 API（含 Transaction） | 🔲 未開始 |
 | 階段 4 | 認證與授權 | 🔲 未開始 |
