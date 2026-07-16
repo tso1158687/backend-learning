@@ -24,7 +24,7 @@ users, products, inventories, orders, order_items
 | 階段 | 主題 | 狀態 |
 |------|------|------|
 | 階段 1 | NestJS + Prisma 基礎建置（環境已備妥，觀念待練習）| 🔄 進行中 |
-| 階段 2 | 商品與庫存 API（CRUD） | 🔲 未開始 |
+| 階段 2 | 商品與庫存 API（CRUD） | 🔄 進行中 |
 | 階段 3 | 訂單 API（含 Transaction） | 🔲 未開始 |
 | 階段 4 | 認證與授權 | 🔲 未開始 |
 | 階段 5 | Angular 前端串接 | 🔲 未開始 |
@@ -108,6 +108,12 @@ users, products, inventories, orders, order_items
 ---
 
 ### 階段 2 — 商品與庫存 API
+
+- `GET /products` — 完成（Controller/Service 分離，回傳 Prisma `findMany()`）
+- `GET /products/:id` — 完成
+  - Service 用 `findUnique` + 手動 `NotFoundException`（id 存在但查無資料 → 404）
+  - Controller 用 `ParseUUIDPipe` 擋掉格式不對的 id（→ 400，避免 Prisma 丟未處理例外變成 500）
+  - 學到的關鍵觀念：`return` Promise 不需要 `async/await`（框架會自動 await），但要對 resolve 後的值做判斷時才需要
 
 
 ---
