@@ -24,7 +24,7 @@ users, products, inventories, orders, order_items
 | 階段 | 主題 | 狀態 |
 |------|------|------|
 | 階段 1 | NestJS + Prisma 基礎建置（環境已備妥，觀念待練習）| 🔄 進行中 |
-| 階段 2 | 商品與庫存 API（CRUD） | 🔄 進行中 |
+| 階段 2 | 商品與庫存 API（CRUD） | ✅ 已完成（庫存 API 併入階段 3 一起做）|
 | 階段 3 | 訂單 API（含 Transaction） | 🔲 未開始 |
 | 階段 4 | 認證與授權 | 🔲 未開始 |
 | 階段 5 | Angular 前端串接 | 🔲 未開始 |
@@ -124,6 +124,12 @@ users, products, inventories, orders, order_items
   - 一開始誤用 `@Put()`，討論 PUT/PATCH 語意差異後改回 `@Patch()`（實務上很多團隊乾脆全走 PATCH，避免 PUT 的「沒傳=清空」誤刪風險）
   - 抓到一個 bug：更新不存在的 id 會讓 Prisma 丟 `P2025`，未攔截時變成 500 → 修法：Service 先呼叫 `findOne(id)` 重用存在性檢查（方法一），討論過方法二（try/catch 抓 Prisma 錯誤碼，效能更好、原子性更佳，是更多實務團隊的預設選擇）
   - fresh-context 驗證 3 案例全數 pass：部分更新 200／不存在 id 404／格式錯誤 id 400
+- `DELETE /products/:id` — 完成
+  - Service 沿用方法一模式（先 `findOne` 再 `delete`）
+  - 討論了 UUID 主鍵碰撞機率（2^122 種組合，實務上視為不會發生，且 `PRIMARY KEY` 約束是最後一道防線）
+  - fresh-context 驗證 4 案例全數 pass：刪除成功 200／刪除後查詢確認 404／不存在 id 404／格式錯誤 id 400
+
+**階段 2 小結**：`GET /products`、`GET /products/:id`、`POST /products`、`PATCH /products/:id`、`DELETE /products/:id` 五個端點全數完成，每個都有型別驗證（DTO）+ 存在性檢查（404）+ 格式檢查（400）三層防護。
 
 
 ---
