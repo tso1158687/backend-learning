@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+import { CreateProductDto } from './dto/create-product.dto';
+
 @Injectable()
 export class ProductsService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -16,5 +18,11 @@ export class ProductsService {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
     return product;
+  }
+
+  create(dto: CreateProductDto) {
+    return this.prismaService.product.create({
+      data: dto,
+    });
   }
 }

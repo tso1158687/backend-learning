@@ -114,6 +114,11 @@ users, products, inventories, orders, order_items
   - Service 用 `findUnique` + 手動 `NotFoundException`（id 存在但查無資料 → 404）
   - Controller 用 `ParseUUIDPipe` 擋掉格式不對的 id（→ 400，避免 Prisma 丟未處理例外變成 500）
   - 學到的關鍵觀念：`return` Promise 不需要 `async/await`（框架會自動 await），但要對 resolve 後的值做判斷時才需要
+- `POST /products` — 完成
+  - DTO（`CreateProductDto`）+ `class-validator` 裝飾器做輸入驗證
+  - `main.ts` 全域 `ValidationPipe`，並自行加上 `whitelist` + `forbidNonWhitelisted`（擋多餘欄位）
+  - 確認回傳型別不需手動標註，Prisma 產生的型別會自動推導貫穿 Service/Controller
+  - fresh-context 驗證 4 案例全數 pass：正常新增／負數價格 400／缺必填 400／多餘欄位 400
 
 
 ---
