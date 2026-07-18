@@ -391,6 +391,50 @@ import type { CreateProductDto } from './dto/create-product.dto';
 
 ---
 
+## PUT vs PATCH，實務上怎麼選
+
+| | PUT | PATCH |
+|---|---|---|
+| 語意 | 整份取代，沒傳的欄位理論上要清空 | 部分更新，沒傳的欄位維持原樣 |
+| 對應的 DTO | 應該用全部必填的 DTO（像 `CreateProductDto`）| 天生適合全部可選的 DTO（`PartialType`）|
+
+**實務真相**：很多團隊乾脆全部 API 都走 `PATCH` 語意（即使是整份更新），因為 `PUT` 的「沒傳就清空」太危險，前端一漏傳欄位資料就被清空。`PATCH` 的「沒傳=不動」安全很多。
+
+判斷原則：DTO 是全部可選 → 用 `@Patch()`；DTO 是全部必填、要求呼叫端傳完整資料 → 用 `@Put()`。兩者要一致，不然語意會自相矛盾。
+
+## 更新/刪除時處理「id 不存在」的兩種寫法
+
+```ts
+// 方法一：先查再改，重用 findOne 的存在性檢查邏輯
+async update(id: string, dto: UpdateProductDto) {
+  await this.findOne(id);  // 找不到會在這裡丟 404
+  return this.prismaService.product.update({ where: { id }, data: dto });
+}
+
+// 方法二：直接操作，用 try/catch 抓 Prisma 的錯誤碼
+async update(id: string, dto: UpdateProductDto) {
+  try {
+    return await this.prismaService.product.update({ where: { id }, data: dto });
+  } catch (error) {
+    if (error.code === 'P2025') {  // Prisma 標準錯誤碼：RecordNotFound
+      throw new NotFoundException(`Product with id ${id} not found`);
+    }
+    throw error;
+  }
+}
+```
+
+| | 方法一（先查後改）| 方法二（try/catch）|
+|---|---|---|
+| 資料庫往返次數 | 2 次 | 1 次（正常情況）|
+| 並發安全性 | 較差，查跟改中間有時間差 | 較好，存在性判斷由資料庫原子操作完成 |
+| 可讀性 | 好懂，不用記錯誤碼 | 需要知道 Prisma 的錯誤碼（如 `P2025`）|
+| 實務上常見度 | 小型專案、優先求可讀性時 | 高流量/效能敏感系統的預設選擇 |
+
+**沒有先查資料庫，直接更新/刪除不存在的 id，Prisma 會拋出未攔截的例外**，NestJS 預設把任何沒被攔截的例外轉成 500。這是很容易漏掉的情境，`create` 不會有這個問題（新增本來就不需要「先存在」），但 `update`／`delete` 都要考慮。
+
+---
+
 ## 踩過的坑
 
 ### 1. Prisma 7 新版 generator 輸出 ESM 語法，跟 CJS 專案衝突

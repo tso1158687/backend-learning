@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -22,6 +23,14 @@ export class ProductsService {
 
   create(dto: CreateProductDto) {
     return this.prismaService.product.create({
+      data: dto,
+    });
+  }
+
+  async update(id: string, dto: UpdateProductDto) {
+    await this.findOne(id);
+    return this.prismaService.product.update({
+      where: { id },
       data: dto,
     });
   }

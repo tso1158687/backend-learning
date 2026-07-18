@@ -5,9 +5,11 @@ import {
   ParseUUIDPipe,
   Post,
   Body,
+  Patch,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -25,5 +27,13 @@ export class ProductsController {
   @Post()
   create(@Body() product: CreateProductDto) {
     return this.productsService.create(product);
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateProductDto,
+  ) {
+    return this.productsService.update(id, dto);
   }
 }

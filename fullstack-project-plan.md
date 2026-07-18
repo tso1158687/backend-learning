@@ -119,6 +119,11 @@ users, products, inventories, orders, order_items
   - `main.ts` 全域 `ValidationPipe`，並自行加上 `whitelist` + `forbidNonWhitelisted`（擋多餘欄位）
   - 確認回傳型別不需手動標註，Prisma 產生的型別會自動推導貫穿 Service/Controller
   - fresh-context 驗證 4 案例全數 pass：正常新增／負數價格 400／缺必填 400／多餘欄位 400
+- `PATCH /products/:id` — 完成
+  - `UpdateProductDto` 用 `PartialType(CreateProductDto)` 繼承，欄位全部變可選
+  - 一開始誤用 `@Put()`，討論 PUT/PATCH 語意差異後改回 `@Patch()`（實務上很多團隊乾脆全走 PATCH，避免 PUT 的「沒傳=清空」誤刪風險）
+  - 抓到一個 bug：更新不存在的 id 會讓 Prisma 丟 `P2025`，未攔截時變成 500 → 修法：Service 先呼叫 `findOne(id)` 重用存在性檢查（方法一），討論過方法二（try/catch 抓 Prisma 錯誤碼，效能更好、原子性更佳，是更多實務團隊的預設選擇）
+  - fresh-context 驗證 3 案例全數 pass：部分更新 200／不存在 id 404／格式錯誤 id 400
 
 
 ---
